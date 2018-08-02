@@ -56,7 +56,7 @@ App = {
       var candidatesResults = $("#candidatesResults");
       candidatesResults.empty();
 
-      for (var i = 1; i <- candidatesCount; i++) {
+      for (var i = 1; i <= candidatesCount; i++) {
         electionInstance.candidates(i).then(function(candidate) {
           var id = candidate[0];
           var name = candidate[1];

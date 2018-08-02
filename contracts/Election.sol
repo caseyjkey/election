@@ -7,6 +7,8 @@ contract Election {
       string name;
       uint voteCount;
     }
+    // Store voters
+    mapping (address => bool) public voters;
     // Store Candidates
     // Fetch Candidate
     mapping (uint => Candidate) public candidates;
@@ -18,8 +20,15 @@ contract Election {
       addCandidate("Lil B, The BasedGod");
     }
 
-    function addCandidate (string _name) private {
+    function addCandidate(string _name) private {
       candidatesCount++;
       candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
+    }
+
+    function vote(uint _candidateId) public {
+      // record that voter has voted
+      voters[msg.sender] = true;
+      // update candidate vote voteCount
+      candidates[_candidateId].voteCount++;
     }
 }
