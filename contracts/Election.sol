@@ -14,5 +14,12 @@ contract Election {
     uint public candidatesCount;
     // Constructor
     function Election() public {
+      addCandidate("Waka Flocka Flame");
+      addCandidate("Lil B, The BasedGod");
+    }
+
+    function addCandidate (string _name) private {
+      candidatesCount++;
+      candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
     }
 }
