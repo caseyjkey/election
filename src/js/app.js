@@ -23,11 +23,13 @@ App = {
 
   initContract: function() {
     $.getJSON("Election.json", function(election) {
-      // INstantiate a new truffle contract from the artifact
+      // Instantiate a new truffle contract from the artifact
       App.contracts.Election = TruffleContract(election);
+
       // Connect provider to interact with the contract
       App.contracts.Election.setProvider(App.web3Provider);
 
+      App.listenForEvents();
       return App.render();
     });
   },

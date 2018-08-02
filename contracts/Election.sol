@@ -14,8 +14,14 @@ contract Election {
     mapping (uint => Candidate) public candidates;
     // Store Candidates voteCount
     uint public candidatesCount;
+
+    // voted event
+    event votedEvent (
+        uint indexed _candidateId
+    );
+
     // Constructor
-    function Election() public {
+    constructor() public {
       addCandidate("Waka Flocka Flame");
       addCandidate("Lil B, The BasedGod");
     }
@@ -34,7 +40,11 @@ contract Election {
 
       // record that voter has voted
       voters[msg.sender] = true;
+
       // update candidate vote voteCount
       candidates[_candidateId].voteCount++;
+
+      // trigger voted event
+      emit votedEvent(_candidateId);
     }
 }
