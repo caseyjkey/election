@@ -70,7 +70,7 @@ contract("Election", function(accounts) {
       electionInstance.vote(candidateId, { from: accounts[1] });
       return electionInstance.candidates(candidateId);
     }).then(function(candidate) {
-      var VoteCount = candidate[2];
+      var voteCount = candidate[2];
       assert.equal(voteCount, 1, "accepts first vote");
       // Try to vote again
       return electionInstance.vote(candidateId, { from: accounts[1] });
