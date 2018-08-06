@@ -30,7 +30,7 @@ App = {
       App.contracts.Election.setProvider(App.web3Provider);
 
       App.listenForEvents();
-      
+
       return App.render();
     });
   },
@@ -76,25 +76,39 @@ App = {
       var candidatesResults = $("#candidatesResults");
       candidatesResults.empty();
 
+      // Query for the candidate choice element
+      var candidatesSelect = $("#candidatesSelect");
+      candidatesSelect.empty();
+
       for (var i = 1; i <= candidatesCount; i++) {
         electionInstance.candidates(i).then(function(candidate) {
           var id = candidate[0];
           var name = candidate[1];
           var voteCount = candidate[2];
 
-          // Render candidate Results
+          // Render candidate Results table
           var candidateTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + voteCount + "</td></tr>";
           candidatesResults.append(candidateTemplate);
+
+          // Render a ballot select option
+          var candidateOption = "<option value='" + id + "' >" + name + "</ option>";
+          candidatesSelect.append(candidateOption);
         });
       }
-
+      return electionInstance.voters(App.account);
+    }).then(function(hasVoted) {
+      // Do not allow a user to votedEvent
+      if(hasVoted) {
+        $('form').hide();
+      }
       loader.hide();
       content.show();
     }).catch(function(error) {
       console.warn(error);
     });
-  }
-};
+  },
+
+
 
 $(function() {
   $(window).load(function() {
